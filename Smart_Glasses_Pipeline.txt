@@ -1,0 +1,70 @@
+Smart Glasses Pipeline (Prepared During Internship)
+
+1. Hardware Setup
+- Camera for real-time video capture.
+- Microphone for taking user commands.
+- Speaker / bone conduction for giving audio output.
+- Processing unit: ARM based SoC / Jetson / RK3588 with optional NPU/TPU.
+- Power unit and battery management.
+
+------------------------------------------------------------
+2. System Layer
+- Lightweight OS (Linux/Android).
+- Drivers for camera, audio, NPU.
+- Middleware: ONNX Runtime / TensorRT / OpenVINO.
+- Communication APIs: WiFi/Bluetooth for fallback to mobile/cloud.
+
+------------------------------------------------------------
+3. AI Processing Pipeline
+
+Approach A: On-Device
+- Capture image from camera.
+- Preprocess image (resize, normalize, tensor conversion).
+- Run object detection (YOLO/MobileNet).
+- OCR module for text reading (Tesseract/PaddleOCR).
+- Language model (quantized VLM/LLM) to form meaningful sentences.
+- Text-to-Speech (TTS) for audio output.
+
+Approach B: Hybrid (Device + Cloud)
+- Run lightweight object detection on-device.
+- Extract embeddings instead of raw video.
+- Send embeddings to cloud for VLM processing.
+- Cloud generates detailed response.
+- Output returned to device for audio.
+
+Approach C: Split Model Execution
+- Vision encoder runs on-device.
+- Decoder runs on cloud/smartphone.
+- Flow: Camera → Encoder (on glasses) → Features → Cloud → Decoder → Text → TTS.
+
+------------------------------------------------------------
+4. Core Modules
+- Computer Vision: YOLO-Nano, MobileNet-SSD, BLIP/MiniGPT for captioning.
+- OCR: Tesseract / PaddleOCR.
+- Language: Quantized LLaMA, Nexa VLM (INT4/INT8), fallback to cloud.
+- Audio: Whisper-small/Vosk for ASR, Coqui TTS/VITS for speech output.
+
+------------------------------------------------------------
+5. Example Flow (Object Detection)
+- User asks: "What’s in front of me?"
+- Camera captures frame.
+- Preprocessing applied.
+- Vision model detects: "Person, Dog, Road Sign".
+- VLM generates: "A person is walking with a dog near a road sign."
+- TTS converts to speech: "Person with a dog ahead."
+
+------------------------------------------------------------
+6. Optimization Techniques
+- Quantization (INT8/INT4).
+- Pruning redundant model layers.
+- Knowledge Distillation for smaller models.
+- Hardware acceleration (TensorRT, RKNN, OpenVINO).
+- Model packaging in GGUF for llama.cpp.
+
+------------------------------------------------------------
+7. Fail-Safe
+- On-device inference used by default.
+- If fails, fallback to cloud/smartphone processing.
+- Obstacle detection always kept on-device for safety.
+
+------------------------------------------------------------
