@@ -1,0 +1,72 @@
+NeuroDrishti Internship – Pipeline & Outcomes
+
+1. Initial Goal
+- Deploy lightweight Vision-Language Models (VLMs) and LLMs on AI-powered smart glasses for the visually impaired.
+- Reduce dependency on cloud inference (due to high cost + latency).
+- Explore quantization, pruning, distillation, and on-device deployment strategies.
+
+------------------------------------------------------------
+2. Pipeline Tried
+
+Step 1: Model Selection
+- Explored Nexa AI SDK Omni VLM and other open-source LLM/VLM models.
+- Chose Nexa VLM for experimentation since it supports multimodal input.
+
+Outcome:
+✓ Good accuracy, but too heavy for direct on-device deployment (billions of parameters).
+
+------------------------------------------------------------
+Step 2: Environment Setup
+- Used PyCharm for development and debugging.
+- Attempted to build llama.cpp for running quantized models locally.
+- Compiled with cmake and tested model loading.
+
+Issues Faced:
+✗ Build errors (Configuring incomplete, errors occurred) due to mismatched dependencies.
+✗ PyCharm debugging made builds slower.
+
+------------------------------------------------------------
+Step 3: Quantization Attempts
+- Tried Post-Training Quantization (PTQ) using libraries like bitsandbytes, llama.cpp, and GGUF formats.
+- Quantization levels: INT8, INT4.
+
+Outcome:
+✓ Model size reduced significantly (up to ~70%).
+✗ Accuracy/performance dropped sharply in VLM tasks (vision-text alignment broke).
+✗ Some quantized models failed to load in Nexa SDK runtime.
+
+------------------------------------------------------------
+Step 4: Pruning & Distillation (Exploration)
+- Looked into structured pruning to remove redundant neurons.
+- Considered knowledge distillation to transfer knowledge from large VLM → smaller student model.
+
+Outcome:
+✗ No working distilled version was achieved during the internship timeline.
+✓ Feasible approach for future (train smaller student VLM specialized for assistive tasks).
+
+------------------------------------------------------------
+Step 5: Smart Glass Integration
+- Designed high-level pipeline for smart glasses:
+  1. Camera captures scene → image preprocessing.
+  2. Lightweight VLM/LLM on-device or partially cloud-assisted.
+  3. Generate text/audio output for visually impaired user.
+
+Outcome:
+✓ Prototype pipeline defined.
+✗ On-device model still too large for real-time inference on glasses hardware.
+
+------------------------------------------------------------
+3. Key Learnings
+- Direct quantization of large VLMs = poor results (accuracy loss).
+- Need for hybrid approach: lightweight on-device model + fallback to cloud for heavy tasks.
+- Possible to build task-specific distilled models for accessibility (navigation, object detection, text reading).
+- Tooling (llama.cpp, GGUF, PyCharm builds) needs careful setup for success.
+
+------------------------------------------------------------
+4. Next Steps / Recommendations
+- Explore LoRA + Quantization (QLoRA) for fine-tuning small VLMs.
+- Create domain-specific dataset (navigation, object recognition for visually impaired).
+- Train a student VLM model with limited vocab/vision tasks.
+- Optimize hardware integration: use edge accelerators (NPU/TPU/RK3588).
+
+------------------------------------------------------------
