@@ -1,7 +1,16 @@
-from nexa_sdk import image_to_text
+# This is a sample Python script.
 
-image_path = "C:\Users\anike\OneDrive\Desktop\vlm_images\WhatsApp Image 2025-07-11 at 19.47.32_82854dea.jpg"
+# Press Shift+F10 to execute it or replace it with your code.
+# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
-print("🔄 Running OmniVLM on:", image_path)
-result = image_to_text(image_path)
-print("✅ Result:", result)
+
+def print_hi(name):
+    # Use a breakpoint in the code line below to debug your script.
+    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+
+
+# Press the green button in the gutter to run the script.
+if __name__ == '__main__':
+    print_hi('PyCharm')
+
+# See PyCharm help at https://www.jetbrains.com/help/pycharm/
